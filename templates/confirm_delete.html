@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="alert alert-danger mt-5" role="alert">
+    <form method="post" class="d-flex-column text-center p-5">{% csrf_token %}
+        <h3>Are you sure you want to delete schema"{{ object }}"?</h3>
+        {{ form }}
+        <input type="submit" value="Confirm" class="btn btn-danger mt-5">
+    </form>
+</div>
+{% endblock %}

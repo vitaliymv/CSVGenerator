@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+
+{% block content %}
+    <div class="container py-5">
+        <div class="d-flex justify-content-between pb-3">
+            <h3>Data schemas</h3>
+            <a href="/new-schema" class="btn btn-success">New schema</a>
+        </div>
+
+
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Title</th>
+                <th scope="col">Modified</th>
+                <th scope="col">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for object in object_list %}
+                <tr>
+                    <th scope="col">{{ object.id }}</th>
+                    <td>{{ object.title }}</td>
+                    <td>{{ object.updated_at }}</td>
+                    <td>
+                        <a href="/edit/{{ object.id }}" class="btn btn-primary mx-3">Edit scheme</a>
+                        <a href="/delete/{{ object.id }}" class="btn btn-danger mx-3">Delete</a>
+                        <a href="/generate-data/{{ object.id }}" class="btn btn-success">Generate data</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

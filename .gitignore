@@ -1,0 +1,6 @@
+/media
+.idea
+venv
+csvGenerator/__pycache__
+core/__pycache__
+db.sqlite3

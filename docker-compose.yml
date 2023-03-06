@@ -1,0 +1,28 @@
+version: "3"
+
+services:
+  web:
+    build: .
+    container_name: csvGenerator
+    command:
+      bash -c "python manage.py makemigrations && 
+               python manage.py migrate && 
+               python manage.py runserver 0.0.0.0:8000"
+    ports:
+      - 8000:8000
+    volumes:
+      - .:/app
+
+  redis:
+    image: redis:alpine
+
+  celery-worker:
+    restart: always
+    build:
+      context: .
+    command: bash -c "celery -A csvGenerator worker --pool=solo -l info"
+    volumes:
+      - .:/app
+    depends_on:
+      - redis
+      - web

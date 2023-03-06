@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h1>Data sets</h1>
+        <form method="post" class="col-3">{% csrf_token %}
+            {% bootstrap_form form %}
+            <button type="submit" class="btn btn-success mt-3">Generate data</button>
+        </form>
+        {% if not object_list %}
+            <p>No datasets yet.</p>
+        {% else %}
+            <table class="table mt-5">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Created</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for dataset in object_list %}
+                    <tr>
+                        <th scope="row">{{ dataset.id }}</th>
+                        <td>{{ dataset.created_at }}</td>
+                        <td>
+                            <button type="button" class="btn
+                 {% if dataset.status == 'Ready' %}
+                    btn-success
+                 {% else %}
+                    btn-secondary
+                 {% endif %}">{{ dataset.status }}</button>
+                        </td>
+
+                        <td>
+                            {% if dataset.status == "Ready" %}
+                                <a href="./download/{{ dataset.id }}" class="text-white">
+                                    <button type="button" class="btn btn-primary">
+                                        Download
+                                    </button>
+                                </a>
+                            {% else %}
+                                <span class="text-secondary">Don't ready</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+    </div>
+{% endblock %}
+
+
+
